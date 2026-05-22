@@ -1,0 +1,352 @@
+body {
+  background-color: hsl(199, 21%, 70%);
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+.card{
+  border: 1px solid hsl(0, 0%, 0%);
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px hsl(0, 0%, 0%, 0.1);
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+  max-width: 250px;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+.card .card-image {
+  border: 2px solid hsl(0, 0%, 0%);
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+}
+.card .card-title {
+  font-family: 'Arial', sans-serif;
+  margin: 10px 0;
+  color: hsl(0, 0%, 20%);
+
+
+}
+
+.card .card-text {
+  font-family: 'Arial', sans-serif;
+  color: hsl(0, 0%, 40%);
+}
+
+.card:hover {
+  box-shadow: 10px 10px 15px hsl(0, 0%, 0%, 0.2);
+}
+
+.hover-video{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+
+}
+
+.card:hover .hover-video {
+  opacity: 1;
+}
+
+section{
+  padding-top: 80px;
+  min-height: 100vh;
+}
+
+.header{
+  display: flex;
+  justify-content: left;
+  padding: 2px;
+}
+.nav{
+  display: flex;  
+  font-family: 'Arial', sans-serif;
+  font-size: 50px;
+  top: 0;
+  justify-content: right;
+  gap: 20px;
+  padding: 10px;
+}
+.web-title {
+  font-family: 'Arial', sans-serif;
+  color: hsl(196, 89%, 65%);
+  text-align: center;
+  margin: 20px 0;
+}
+h2{
+  font-family: 'Arial', sans-serif;
+  color: hsl(0, 0%, 20%);
+  text-align: center;
+  margin: 20px 0;
+}
+p{
+  font-family: 'Arial', sans-serif;
+  color: hsl(0, 0%, 40%);
+  text-align: center;
+  margin: 10px 20px;
+}
+/*The container that holds the background */
+.slideshow-background {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+
+}
+
+/* Each individual slide */
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: repeat;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out; 
+}
+
+.slide.active {
+  opacity: 1; 
+}
+
+/*Dark tint overlay (optional, makes text easier to read) */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* 40% black overlay */
+  z-index: 1;
+}
+
+/*Make sure Home container is the anchor */
+.home-container {
+  position: relative; /* Essential for absolute positioning inside */
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/*Your content sits on top */
+.home-content {
+  position: relative;
+  z-index: 2; /* Higher than the background */
+  color: white; /* Make sure text is white to pop against the dark overlay */
+  text-align: center;
+  top: 50%;
+
+}
+
+.home-content h2 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+  color: white;
+}
+
+.home-content p {
+  font-size: 1.5rem;
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+  color: #eee;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  opacity: 1;
+  padding: 20px;
+  background-color: hsla(0, 0%, 0%, 0.8);
+  border-radius: 10px;
+}
+.nav a{
+  color: hsl(0, 0%, 20%);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-size: 20px;
+}
+.nav a:hover {
+  color: hsl(196, 89%, 65%);
+}
+.nav a.active {
+  color: hsl(196, 89%, 65%);
+}
+
+
+
+/*CARD SLIDER*/
+/* 🔹 Side Navigation Buttons (low opacity, appear on hover) */
+.side-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid hsl(0, 0%, 0%);
+  color: hsl(0, 0%, 20%);
+  font-size: 32px;
+  padding: 16px 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 100;
+  opacity: 0.3; /* 🔻 Low opacity by default */
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  user-select: none;
+}
+
+.side-nav:hover {
+
+  opacity: 1; /* 🔺 Full opacity on hover */
+  background: hsl(0, 0%, 0%);
+  color: white;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.side-nav.prev {
+  left: 20px;
+}
+
+.side-nav.next {
+  right: 20px;
+}
+
+/* 🔹 Draggable Slider */
+.card-slider {
+  position: relative;
+  max-width: 400px;
+  margin: 40px auto;
+
+  touch-action: pan-y; /* Allows vertical scroll, blocks horizontal */
+  user-select: none; /* Prevents text selection while dragging */
+  cursor: grab;
+}
+
+.card-slider:active {
+  cursor: grabbing;
+}
+
+.slider-track {
+  position: relative;
+  height: 450px;
+  overflow: visible; /* Allow cards to drag outside during animation */
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6; /* Dim inactive cards */
+  pointer-events: none; /* Can't click inactive cards */
+  transition: transform 0.4s ease-out, opacity 0.3s ease;
+  will-change: transform; /* Performance boost */
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+  z-index: 10;
+}
+
+.slide.dragging {
+  transition: none; /* Smooth drag without snap */
+  z-index: 20;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+}
+
+/* 🔹 Your card containers (ensure they're visible) */
+.osu-container,
+.league-container,
+.lynae-container {
+  border: 1px solid hsl(0, 0%, 0%);
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.1);
+  padding: 20px;
+  text-align: center;
+  background-color: hsla(218, 56%, 89%, 0.95);
+  backdrop-filter: blur(10px);
+  opacity: 0.95;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 🔹 Images */
+.ryzent-image,
+.akali-image,
+.lynaePicture {
+  width: 100%;
+  max-width: 250px;
+  height: 220px;
+  object-fit: cover;
+  border: 2px solid hsl(0, 0%, 0%);
+  border-radius: 10px;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+  pointer-events: none; /* Prevent image drag */
+}
+
+.ryzent-image:hover,
+.akali-image:hover,
+.lynaePicture:hover {
+  transform: scale(1.05);
+}
+
+/* 🔹 Dots */
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  position: relative;
+  z-index: 15;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  background: hsl(0, 0%, 52%);
+  border: 2px solid hsl(0, 0%, 0%);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background: hsl(0, 0%, 100%);
+  transform: scale(1.3);
+}
+
+.dot:hover {
+  background: hsl(0, 0%, 100%);
+}
+
+/* 🔹 Mobile Responsive */
+@media (max-width: 768px) {
+  .side-nav {
+    font-size: 24px;
+    padding: 12px 16px;
+    opacity: 0.5;
+  }
+  
+
+}
